@@ -3,21 +3,21 @@
 #' @description
 #' Manages the JAX backend for `marginaleffects`.
 #' 
-#' * `initialize_JAX_backend()`: initializes JAX backend.
-#' * `teardown_JAX_backend()`: deactivates JAX backend, optionally unloading all internal Python libraries/functions.
+#' * `enable_JAX_backend()`: enables JAX backend.
+#' * `disable_JAX_backend()`: disables JAX backend, optionally unloading all internal Python libraries/functions.
 #' 
 #' 
 #' @examples
 #' library(marginaleffects)
 #' library(marginaleffectsJAX)
-#' initialize_JAX_backend()
+#' enable_JAX_backend()
 #' mod <- lm(mpg ~ hp + am, data = mtcars)
 #' head(predictions(mod)) # using JAX
-#' teardown_JAX_backend()
+#' disable_JAX_backend()
 #' head(predictions(mod)) # not using JAX
 
 #' @export
-initialize_JAX_backend <- function() {
+enable_JAX_backend <- function() {
   # check if the environment already exists and has "jax" object
   if (!exists("jax", envir = mej_env, inherits = FALSE)){
     # require Python libraries
@@ -67,17 +67,16 @@ initialize_JAX_backend <- function() {
   # set option and notify user
   options(marginaleffects_jacobian_function = marginaleffectsJAX:::jax_jacobian)
   insight::format_message(
-    "JAX is now the backend for `marginaleffects`.",
-    "Run `teardown_JAX_backend()` to disable."
+    "JAX is now the backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
   ) |>
     message()
 }
 
-#' @rdname initialize_JAX_backend
-#' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that after running `teardown_JAX_backend(hard_unload = TRUE)`, reactivating the JAX backend takes more time.
+#' @rdname enable_JAX_backend
+#' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that after running `disable_JAX_backend(hard_unload = TRUE)`, reactivating the JAX backend takes more time.
 #' @export
 #' 
-teardown_JAX_backend <- function(hard_unload = FALSE){
+disable_JAX_backend <- function(hard_unload = FALSE){
   if (isTRUE(hard_unload)){
     rm(list = ls(envir = mej_env))
   }
@@ -85,8 +84,7 @@ teardown_JAX_backend <- function(hard_unload = FALSE){
   # set option and notify user
   options(marginaleffects_jacobian_function = NULL)
   insight::format_message(
-    "JAX is no longer the backend for `marginaleffects`.",
-    "Run `initialize_JAX_backend()` to reactivate."
+    "JAX is no longer the backend for `marginaleffects`. Run `enable_JAX_backend()` to reactivate."
   ) |>
     message()
 }

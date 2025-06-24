@@ -1,12 +1,3 @@
-#' Compute Jacobian using JAX
-#'
-#' @export
-#' @examples
-#' library(marginaleffects)
-#' library(marginaleffectsJAX)
-#' mod <- lm(mpg ~ hp + am, data = mtcars)
-#' predictions(mod) |> head()
-
 jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ...) {
   if (!identical(calling_function, "predictions")) {
     msg <- "`marginaleffectsJAX` only supports predictions(). Reverting to standard computation."

@@ -1,7 +1,16 @@
-.onLoad <- function(libname, pkgname) {
+#' JAX backend
+#'
+#' Sets up a JAX backend for `marginaleffects`, using reticulate
+#' @export
+#' @examples
+#' library(marginaleffects)
+#' library(marginaleffectsJAX)
+#' initialize_JAX_backend()
+#' mod <- lm(mpg ~ hp + am, data = mtcars)
+#' head(predictions(mod))
 
+initialize_JAX_backend <- function() {
   # require Python libraries
-
   reticulate::py_require("numpy")
   reticulate::py_require("jax")
   reticulate::py_require("functools")
@@ -45,10 +54,12 @@
   # mej_env$j_get_avg_predict_lm <- mej_env$jax$jacfwd(mej_env$get_avg_predict_lm)
 
   # set option and notify user
-  options(marginaleffects_jacobian_function = jax_jacobian)
-  insight::format_message("JAX set as backend for `marginaleffects`.",
-                          "Run `options(marginaleffects_jacobian_function = NULL)` to disable.") |>
-    packageStartupMessage()
+  options(marginaleffects_jacobian_function = marginaleffectsJAX:::jax_jacobian)
+  insight::format_message(
+    "JAX set as backend for `marginaleffects`.",
+    "Run `options(marginaleffects_jacobian_function = NULL)` to disable."
+  ) |>
+    message()
 }
 
 mej_env <- new.env(parent = emptyenv())

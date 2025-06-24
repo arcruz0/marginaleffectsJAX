@@ -37,5 +37,10 @@ head(predictions(mod))
 | :--- |   :---:    |
 | `predictions(mod)`  | ✅ | 
 | `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
-| `predictions(mod, by = variable)`  | 🔜 |
+| `predictions(mod, by = "var")`  | 🔜 |
+| `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |
+| `predictions(mod, by = ..., byfun = sum)`  | 🔜 |
+| `comparisons(mod, ...)`  | 🔜 |
+
+
 

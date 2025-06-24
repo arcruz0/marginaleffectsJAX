@@ -31,6 +31,8 @@ head(predictions(mod))
 
 ## Supported `marginaleffects` calls (*very* preliminary)
 
+(Only models of class `lm` are supported).
+
 | Call  | Supported? | Tested? |
 | :--- |   :---:    |  :---:  |
 | `predictions(mod)`  | ✅ | ✅ |

@@ -1,12 +1,19 @@
 Package: marginaleffectsJAX
 Type: Package
 Title: A JAX Backend for `marginaleffects`
-Version: 0.1.0
+Version: 0.0.1
 Authors@R: c(
     person(
-      "Andrés", "Cruz",
+      given = "Andrés", 
+      family = "Cruz",
       email = "andres.cruz@utexas.edu",
       role = c("aut", "cre")
+    ),
+    person(
+      given = "Vincent",
+      family = "Arel-Bundock",
+      role = c("ctb"),
+      email = "vincent.arel-bundock@umontreal.ca"
     )
   )
 Description: Speeds up some Delta-method computations in `marginaleffects`, using a JAX backend via `reticulate`. Currently only linear models of class "lm" are supported.

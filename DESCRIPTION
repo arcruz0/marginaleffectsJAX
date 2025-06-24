@@ -23,7 +23,6 @@ LazyData: true
 Imports:
     marginaleffects (>= 0.27.0.8),
     reticulate,
-    insight,
     checkmate
 Suggests: tinytest
 Roxygen: list(markdown = TRUE)

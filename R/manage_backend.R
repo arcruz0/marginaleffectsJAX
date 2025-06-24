@@ -73,10 +73,7 @@ enable_JAX_backend <- function() {
 
   # set option and notify user
   options(marginaleffects_jacobian_function = marginaleffectsJAX:::jax_jacobian)
-  insight::format_message(
-    "JAX is now a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
-  ) |>
-    message()
+  message("JAX is now a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable.")
 }
 
 #' @rdname enable_JAX_backend
@@ -90,10 +87,7 @@ disable_JAX_backend <- function(hard_unload = FALSE){
   
   # set option and notify user
   options(marginaleffects_jacobian_function = \(...) NULL)
-  insight::format_message(
-    "JAX is no longer a backend for `marginaleffects`. Run `enable_JAX_backend()` to reactivate."
-  ) |>
-    message()
+  message("JAX is no longer a backend for `marginaleffects`. Run `enable_JAX_backend()` to reactivate.")
 }
 
 #' @rdname enable_JAX_backend
@@ -110,14 +104,10 @@ status_JAX_backend <- function(){
   }
   
   if (isTRUE(lgl_jax_status)){
-    insight::format_message(
-      "JAX is currently a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
-    ) |> message()
+    message("JAX is currently a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable.")
     invisible(TRUE)
   } else {
-    insight::format_message(
-      "JAX is not currently a backend for `marginaleffects`. Run `enable_JAX_backend()` to enable."
-    ) |> message()
+    message("JAX is not currently a backend for `marginaleffects`. Run `enable_JAX_backend()` to enable.")
     invisible(FALSE)
   }
 }

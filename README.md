@@ -32,7 +32,7 @@ head(predictions(mod))
 ## Supported calls (*very* preliminary)
 
 | Call  | Supported? | Tested? |
-| :---: |   :---:    |  :---:  |
+| :--- |   :---:    |  :---:  |
 | `predictions(mod)`  | ✅ | ❌ |
 | `predictions(mod, by = TRUE)`  | 🔜 | ❌ |
 | `predictions(mod, by = variable)`  | 🔜 | ❌ |

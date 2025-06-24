@@ -3,11 +3,14 @@
 \name{enable_JAX_backend}
 \alias{enable_JAX_backend}
 \alias{disable_JAX_backend}
+\alias{status_JAX_backend}
 \title{JAX backend}
 \usage{
 enable_JAX_backend()
 
 disable_JAX_backend(hard_unload = FALSE)
+
+status_JAX_backend()
 }
 \arguments{
 \item{hard_unload}{Whether to unload all Python libraries/functions (defaults to FALSE). Note that after running \code{disable_JAX_backend(hard_unload = TRUE)}, reactivating the JAX backend takes more time.}
@@ -17,6 +20,7 @@ Manages the JAX backend for \code{marginaleffects}.
 \itemize{
 \item \code{enable_JAX_backend()}: enables JAX backend.
 \item \code{disable_JAX_backend()}: disables JAX backend, optionally unloading all internal Python libraries/functions.
+\item \code{status_JAX_backend()}: checks the status of the JAX backend.
 }
 }
 \examples{

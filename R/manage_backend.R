@@ -5,6 +5,7 @@
 #' 
 #' * `enable_JAX_backend()`: enables JAX backend.
 #' * `disable_JAX_backend()`: disables JAX backend, optionally unloading all internal Python libraries/functions.
+#' * `status_JAX_backend()`: checks the status of the JAX backend.
 #' 
 #' 
 #' @examples
@@ -30,6 +31,12 @@ enable_JAX_backend <- function() {
     mej_env$jax <- reticulate::import("jax")
     mej_env$jnp <- reticulate::import("jax.numpy")
     mej_env$functools <- reticulate::import("functools")
+    
+    # utils
+    mej_env$check_jax <- function(){
+      one <- mej_env$jnp$abs(-1) |> mej_env$np$array() |> as.integer()
+      return(isTRUE(all.equal(one, 1L)))
+    }
     
     # JIT and Jacobian functions - TODO: call from other script(s)
     
@@ -67,7 +74,7 @@ enable_JAX_backend <- function() {
   # set option and notify user
   options(marginaleffects_jacobian_function = marginaleffectsJAX:::jax_jacobian)
   insight::format_message(
-    "JAX is now the backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
+    "JAX is now a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
   ) |>
     message()
 }
@@ -78,15 +85,41 @@ enable_JAX_backend <- function() {
 #' 
 disable_JAX_backend <- function(hard_unload = FALSE){
   if (isTRUE(hard_unload)){
-    rm(list = ls(envir = mej_env))
+    rm(list = ls(envir = mej_env), envir = mej_env)
   }
   
   # set option and notify user
-  options(marginaleffects_jacobian_function = NULL)
+  options(marginaleffects_jacobian_function = \(...) NULL)
   insight::format_message(
-    "JAX is no longer the backend for `marginaleffects`. Run `enable_JAX_backend()` to reactivate."
+    "JAX is no longer a backend for `marginaleffects`. Run `enable_JAX_backend()` to reactivate."
   ) |>
     message()
+}
+
+#' @rdname enable_JAX_backend
+#' @export
+#' 
+status_JAX_backend <- function(){
+  lgl_jax_status <- FALSE
+  
+  current_option <- getOption("marginaleffects_jacobian_function", 
+                              default = \(...) NULL)
+  
+  if (!isTRUE(all.equal(current_option, \(...) NULL, check.environment = F))){
+    lgl_jax_status <- mej_env$check_jax()
+  }
+  
+  if (isTRUE(lgl_jax_status)){
+    insight::format_message(
+      "JAX is currently a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable."
+    ) |> message()
+    invisible(TRUE)
+  } else {
+    insight::format_message(
+      "JAX is not currently a backend for `marginaleffects`. Run `enable_JAX_backend()` to enable."
+    ) |> message()
+    invisible(FALSE)
+  }
 }
 
 mej_env <- new.env(parent = emptyenv())

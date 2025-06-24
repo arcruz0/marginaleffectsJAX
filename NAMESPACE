@@ -2,3 +2,4 @@
 
 export(disable_JAX_backend)
 export(enable_JAX_backend)
+export(status_JAX_backend)

@@ -33,9 +33,9 @@ head(predictions(mod))
 
 (Only models of class `lm` are supported).
 
-| Call  | Supported? | Tested? |
-| :--- |   :---:    |  :---:  |
-| `predictions(mod)`  | ✅ | ✅ |
-| `predictions(mod, by = TRUE)`  | 🔜 | 🔜 |
-| `predictions(mod, by = variable)`  | 🔜 | 🔜 |
+| Call  | Supported? |
+| :--- |   :---:    |
+| `predictions(mod)`  | ✅ | 
+| `predictions(mod, by = TRUE)`  | ✅  | 
+| `predictions(mod, by = variable)`  | 🔜 |
 

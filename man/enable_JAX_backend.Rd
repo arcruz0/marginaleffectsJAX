@@ -13,7 +13,7 @@ disable_JAX_backend(hard_unload = FALSE)
 status_JAX_backend()
 }
 \arguments{
-\item{hard_unload}{Whether to unload all Python libraries/functions (defaults to FALSE). Note that after running \code{disable_JAX_backend(hard_unload = TRUE)}, reactivating the JAX backend takes more time.}
+\item{hard_unload}{Whether to unload all Python libraries/functions (defaults to FALSE). Note that even after running \code{disable_JAX_backend(hard_unload = TRUE)}, the \code{reticulate} Python bindings will remain---see \url{https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482}.}
 }
 \description{
 Manages the JAX backend for \code{marginaleffects}.

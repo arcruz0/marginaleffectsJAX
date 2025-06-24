@@ -80,7 +80,7 @@ enable_JAX_backend <- function() {
 }
 
 #' @rdname enable_JAX_backend
-#' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that after running `disable_JAX_backend(hard_unload = TRUE)`, reactivating the JAX backend takes more time.
+#' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that even after running `disable_JAX_backend(hard_unload = TRUE)`, the `reticulate` Python bindings will remain---see <https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482>.
 #' @export
 #' 
 disable_JAX_backend <- function(hard_unload = FALSE){

@@ -1,6 +1,12 @@
 jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ...) {
+  # testing only:
+  # list_args <<- c(as.list(environment()), list(...))
+  # message("Wrote `list_args` to Global environment")
+  # return(NULL)
+  
   # https://stackoverflow.com/a/17244041
   list_args <- c(as.list(environment()), list(...))
+  
   verbose <- getOption("marginaleffectsJAX_verbose", default = FALSE)
   
   if (isTRUE(verbose)) message("--Calling JAX backend")

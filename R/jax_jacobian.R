@@ -1,4 +1,8 @@
 jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ...) {
+  verbose <- getOption("marginaleffectsJAX_verbose", default = FALSE)
+  
+  if (isTRUE(verbose)) message("--Calling JAX backend")
+  
   if (!identical(calling_function, "predictions")) {
     msg <- "`marginaleffectsJAX` only supports predictions(). Reverting to standard computation."
     warning(msg, call. = FALSE)
@@ -26,5 +30,14 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
 
   J <- mej_env$j_get_predict_lm(mej_env$np$array(coefs), X) |>
     mej_env$np$array()
+  if (isTRUE(verbose)) message("--Executing JAX function")
+  if (isTRUE(verbose)){
+    if (!is.null(J)){
+      message("--Succesfully executed JAX function")
+    } else {
+      message("--JAX function erred. Reverting to standard computation.")
+    }
+  }
+  
   return(J)
 }

@@ -6,14 +6,16 @@
 \alias{status_JAX_backend}
 \title{JAX backend}
 \usage{
-enable_JAX_backend()
+enable_JAX_backend(verbose = FALSE)
 
 disable_JAX_backend(hard_unload = FALSE)
 
 status_JAX_backend()
 }
 \arguments{
-\item{hard_unload}{Whether to unload all Python libraries/functions (defaults to FALSE). Note that even after running \code{disable_JAX_backend(hard_unload = TRUE)}, the \code{reticulate} Python bindings will remain---see \url{https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482}.}
+\item{verbose}{Whether to display informative messages any time the JAX backend is used by a \code{marginaleffects} function (defaults to \code{FALSE}).}
+
+\item{hard_unload}{Whether to unload all Python libraries/functions (defaults to \code{FALSE}). Note that even after running \code{disable_JAX_backend(hard_unload = TRUE)}, the \code{reticulate} Python bindings will remain---see \url{https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482}.}
 }
 \description{
 Manages the JAX backend for \code{marginaleffects}.
@@ -31,4 +33,5 @@ mod <- lm(mpg ~ hp + am, data = mtcars)
 head(predictions(mod)) # using JAX
 disable_JAX_backend()
 head(predictions(mod)) # not using JAX
+
 }

@@ -17,8 +17,11 @@
 #' disable_JAX_backend()
 #' head(predictions(mod)) # not using JAX
 
+#' 
+#' @param verbose Whether to display informative messages any time the JAX backend is used by a `marginaleffects` function (defaults to `FALSE`).
+#' 
 #' @export
-enable_JAX_backend <- function() {
+enable_JAX_backend <- function(verbose = FALSE) {
   # check if the environment already exists and has "jax" object
   if (!exists("jax", envir = mej_env, inherits = FALSE)){
     # require Python libraries
@@ -73,11 +76,13 @@ enable_JAX_backend <- function() {
 
   # set option and notify user
   options(marginaleffects_jacobian_function = marginaleffectsJAX:::jax_jacobian)
+  options(marginaleffectsJAX_verbose = verbose)
   message("JAX is now a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable.")
 }
 
 #' @rdname enable_JAX_backend
 #' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that even after running `disable_JAX_backend(hard_unload = TRUE)`, the `reticulate` Python bindings will remain---see <https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482>.
+#' @param hard_unload Whether to unload all Python libraries/functions (defaults to `FALSE`). Note that even after running `disable_JAX_backend(hard_unload = TRUE)`, the `reticulate` Python bindings will remain---see <https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482>.
 #' @export
 #' 
 disable_JAX_backend <- function(hard_unload = FALSE){

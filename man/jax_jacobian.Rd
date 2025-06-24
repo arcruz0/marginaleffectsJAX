@@ -11,7 +11,7 @@ Compute Jacobian using JAX
 }
 \examples{
 library(marginaleffects)
-library(marginaleffectsjax)
+library(marginaleffectsJAX)
 mod <- lm(mpg ~ hp + am, data = mtcars)
 predictions(mod) |> head()
 }

@@ -16,7 +16,6 @@
 #' head(predictions(mod)) # using JAX
 #' disable_JAX_backend()
 #' head(predictions(mod)) # not using JAX
-
 #' 
 #' @param verbose Whether to display informative messages any time the JAX backend is used by a `marginaleffects` function (defaults to `FALSE`).
 #' 
@@ -52,6 +51,15 @@ enable_JAX_backend <- function(verbose = FALSE) {
     
     mej_env$j_get_predict_lm <- mej_env$jax$jacfwd(mej_env$get_predict_lm)
     
+    # predictions(, by = T)
+    mej_env$get_predict_byT_lm <- mej_env$jax$jit(
+      function(coefs, X) {
+        return(mej_env$jnp$mean(mej_env$jnp$matmul(X, coefs)))
+      }
+    )
+    
+    mej_env$j_get_predict_byT_lm <- mej_env$jax$jacfwd(mej_env$get_predict_byT_lm)
+    
     # average predictions (TODO)
     
     # mej_env$jit_partial <- mej_env$functools$partial(mej_env$jax$jit, static_argnums = 3L)
@@ -81,7 +89,6 @@ enable_JAX_backend <- function(verbose = FALSE) {
 }
 
 #' @rdname enable_JAX_backend
-#' @param hard_unload Whether to unload all Python libraries/functions (defaults to FALSE). Note that even after running `disable_JAX_backend(hard_unload = TRUE)`, the `reticulate` Python bindings will remain---see <https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482>.
 #' @param hard_unload Whether to unload all Python libraries/functions (defaults to `FALSE`). Note that even after running `disable_JAX_backend(hard_unload = TRUE)`, the `reticulate` Python bindings will remain---see <https://github.com/rstudio/reticulate/issues/580#issuecomment-521364482>.
 #' @export
 #' 

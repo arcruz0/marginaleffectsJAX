@@ -1,5 +1,8 @@
 library(marginaleffects)
 mod <- lm(mpg ~ hp, mtcars)
+
+# predictions() ----
+
 preds_raw <- predictions(mod)
 
 enable_JAX_backend()
@@ -7,3 +10,13 @@ preds_jax <- predictions(mod)
 
 expect_equal(preds_jax$estimate, preds_raw$estimate)
 expect_equal(preds_jax$std.error, preds_raw$std.error)
+
+# predictions(, by = T) ----
+
+preds_byT_jax <- predictions(mod, by = T)
+
+disable_JAX_backend()
+preds_byT_raw <- predictions(mod, by = T)
+
+expect_equal(preds_byT_jax$estimate, preds_byT_raw$estimate)
+expect_equal(preds_byT_jax$std.error, preds_byT_raw$std.error)

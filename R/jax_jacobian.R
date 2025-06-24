@@ -1,4 +1,6 @@
 jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ...) {
+  # https://stackoverflow.com/a/17244041
+  list_args <- c(as.list(environment()), list(...))
   verbose <- getOption("marginaleffectsJAX_verbose", default = FALSE)
   
   if (isTRUE(verbose)) message("--Calling JAX backend")
@@ -27,10 +29,24 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
     warning(msg, call. = FALSE)
     return(NULL)
   }
-
-  J <- mej_env$j_get_predict_lm(mej_env$np$array(coefs), X) |>
-    mej_env$np$array()
+  
+  # supported predict arguments
+  if (!isTRUE(checkmate::check_logical(list_args$by, null.ok = FALSE))){
+    msg <- "`marginaleffectsJAX` only supports logical values in the `by =` argument of `predictions()`. Reverting to standard computation."
+    warning(msg, call. = FALSE)
+    return(NULL)
+  }
+  
+  # executing JAX
   if (isTRUE(verbose)) message("--Executing JAX function")
+  J <- NULL
+  
+  if (isTRUE(is.null(list_args$by))){
+    J <- jacobian_predictions(coefs, X)
+  } else if (isTRUE(list_args$by)) {
+    J <- jacobian_predictions_byT(coefs, X)
+  }
+  
   if (isTRUE(verbose)){
     if (!is.null(J)){
       message("--Succesfully executed JAX function")

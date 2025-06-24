@@ -34,6 +34,6 @@ head(predictions(mod))
 | Call  | Supported? | Tested? |
 | ------------- | - | - |
 | `predictions(mod)`  | Yes | No |
-| `predictions(mod, by = TRUE)`  | TO-DO | No |
-| `predictions(mod, by = variable)`  | TO-DO | No |
+| `predictions(mod, by = TRUE)`  | TODO | No |
+| `predictions(mod, by = variable)`  | TODO | No |
 

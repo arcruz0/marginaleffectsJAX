@@ -1,4 +1,4 @@
-# marginaleffectsjax
+# marginaleffectsJAX
 
 A JAX Backend for `marginaleffects`. Under construction!
 
@@ -6,5 +6,5 @@ A JAX Backend for `marginaleffects`. Under construction!
 
 ``` r
 install.packages("remotes") # if `remotes` is not installed
-remotes::install_github("arcruz0/marginaleffectsjax")
+remotes::install_github("arcruz0/marginaleffectsJAX")
 ```

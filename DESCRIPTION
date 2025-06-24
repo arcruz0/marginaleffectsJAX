@@ -1,4 +1,4 @@
-Package: marginaleffectsjax
+Package: marginaleffectsJAX
 Type: Package
 Title: A JAX Backend for `marginaleffects`
 Version: 0.1.0

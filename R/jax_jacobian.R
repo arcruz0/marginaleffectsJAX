@@ -38,7 +38,7 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
   
   # supported predict arguments
   if (!isTRUE(checkmate::check_logical(list_args$by, null.ok = FALSE))){
-    msg <- "`marginaleffectsJAX` only supports logical values in the `by =` argument of `predictions()`. Reverting to standard computation."
+    msg <- "`marginaleffectsJAX` only supports T/F in the `by =` argument of `predictions()`. Reverting to standard computation."
     warning(msg, call. = FALSE)
     return(NULL)
   }

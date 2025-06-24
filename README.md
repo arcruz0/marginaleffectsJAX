@@ -38,7 +38,7 @@ predictions(mod, by = TRUE)
 #> Type: response
 
 predictions(mod, by = "am") # still not implemented; gives warning
-#> Warning: `marginaleffectsJAX` only supports logical values in the `by =`
+#> Warning: `marginaleffectsJAX` only supports T/F in the `by =`
 #> argument of `predictions()`. Reverting to standard computation.
 #> 
 #>  am Estimate Std. Error    z Pr(>|z|)     S 2.5 % 97.5 %

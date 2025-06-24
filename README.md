@@ -29,7 +29,7 @@ head(predictions(mod))
 #> Type: response
 ```
 
-## Supported calls (*very* preliminary)
+## Supported `marginaleffects` calls (*very* preliminary)
 
 | Call  | Supported? | Tested? |
 | :--- |   :---:    |  :---:  |

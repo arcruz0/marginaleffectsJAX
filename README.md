@@ -36,6 +36,6 @@ head(predictions(mod))
 | Call  | Supported? |
 | :--- |   :---:    |
 | `predictions(mod)`  | ✅ | 
-| `predictions(mod, by = TRUE)`  | ✅  | 
+| `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
 | `predictions(mod, by = variable)`  | 🔜 |
 

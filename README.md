@@ -15,7 +15,9 @@ library(marginaleffects)
 library(marginaleffectsJAX)
 enable_JAX_backend()
 #> JAX is now a backend for `marginaleffects`. Run `disable_JAX_backend()` to disable.
+
 mod <- lm(mpg ~ hp + am, mtcars)
+
 predictions(mod) |> head()
 #> 
 #>  Estimate Std. Error    z Pr(>|z|)     S 2.5 % 97.5 %
@@ -27,12 +29,14 @@ predictions(mod) |> head()
 #>      20.4      0.796 25.6   <0.001 478.6  18.8   22.0
 #> 
 #> Type: response
+
 predictions(mod, by = TRUE)
 #> 
 #>  Estimate Std. Error    z Pr(>|z|)   S 2.5 % 97.5 %
 #>      20.1      0.514 39.1   <0.001 Inf  19.1   21.1
 #> 
 #> Type: response
+
 predictions(mod, by = "am") # still not implemented; gives warning
 #> Warning: `marginaleffectsJAX` only supports logical values in the `by =`
 #> argument of `predictions()`. Reverting to standard computation.

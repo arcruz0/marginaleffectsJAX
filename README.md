@@ -28,3 +28,12 @@ head(predictions(mod))
 #> 
 #> Type: response
 ```
+
+## Supported calls (*very* preliminary)
+
+| Call  | Supported? | Tested? |
+| ------------- | - | - |
+| `predictions(mod)`  | Yes | No |
+| `predictions(mod, by = TRUE)`  | TO-DO | No |
+| `predictions(mod, by = variable)`  | TO-DO | No |
+

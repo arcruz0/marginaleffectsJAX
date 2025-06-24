@@ -1,4 +1,6 @@
- A JAX Backend for `marginaleffects`. Under construction!
+# marginaleffectsjax
+
+A JAX Backend for `marginaleffects`. Under construction!
 
 ## Installation
 

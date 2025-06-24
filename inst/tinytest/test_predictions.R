@@ -20,3 +20,13 @@ preds_byT_raw <- predictions(mod, by = T)
 
 expect_equal(preds_byT_jax$estimate, preds_byT_raw$estimate)
 expect_equal(preds_byT_jax$std.error, preds_byT_raw$std.error)
+
+# avg_predictions() ----
+
+avg_preds_raw <- avg_predictions(mod)
+
+enable_JAX_backend()
+avg_preds_jax <- avg_predictions(mod)
+
+expect_equal(avg_preds_jax$estimate, avg_preds_raw$estimate)
+expect_equal(avg_preds_jax$std.error, avg_preds_raw$std.error)

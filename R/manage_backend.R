@@ -26,13 +26,13 @@ enable_JAX_backend <- function(verbose = FALSE) {
     # require Python libraries
     reticulate::py_require("numpy")
     reticulate::py_require("jax")
-    reticulate::py_require("functools")
+    # reticulate::py_require("functools")
     
     # load Python libraries to "mej_env" environment
     mej_env$np  <- reticulate::import("numpy")
     mej_env$jax <- reticulate::import("jax")
     mej_env$jnp <- reticulate::import("jax.numpy")
-    mej_env$functools <- reticulate::import("functools")
+    # mej_env$functools <- reticulate::import("functools")
     
     # utils
     mej_env$check_jax <- function(){

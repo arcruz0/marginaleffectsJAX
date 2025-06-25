@@ -58,7 +58,7 @@ enable_JAX_backend <- function(verbose = FALSE) {
       }
     )
     
-    mej_env$j_get_predict_byT_lm <- mej_env$jax$jacfwd(mej_env$get_predict_byT_lm)
+    mej_env$j_get_predict_byT_lm <- mej_env$jax$jacrev(mej_env$get_predict_byT_lm)
     
     # average predictions (TODO)
     

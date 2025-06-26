@@ -2,80 +2,56 @@
 # must allow some tolerance
 tol <- 1e-5
 
+test_predictions <- function(expr_preds, tolerance = 1e-5){
+  enable_JAX_backend()
+  preds_jax <- eval(expr_preds)
+  disable_JAX_backend()
+  preds_no_jax <- eval(expr_preds)
+  
+  expect_equal(preds_jax$estimate, preds_no_jax$estimate, tolerance = tolerance)
+  expect_equal(preds_jax$std.error, preds_no_jax$std.error, tolerance = tolerance)
+}
+
 library(marginaleffects)
 mod <- lm(mpg ~ hp + am, mtcars)
 
 # predictions() ----
 
-enable_JAX_backend()
-preds_jax <- predictions(mod)
-
-disable_JAX_backend()
-preds_raw <- predictions(mod)
-
-expect_equal(preds_jax$estimate, preds_raw$estimate, tolerance = tol)
-expect_equal(preds_jax$std.error, preds_raw$std.error, tolerance = tol)
+test_predictions(
+  predictions(mod)
+)
 
 # predictions(, by = F) ----
 
-enable_JAX_backend()
-preds_byF_jax <- predictions(mod, by = F)
-
-disable_JAX_backend()
-preds_byF_raw <- predictions(mod, by = F)
-
-expect_equal(preds_byF_jax$estimate, preds_byF_raw$estimate, tolerance = tol)
-expect_equal(preds_byF_jax$std.error, preds_byF_raw$std.error, tolerance = tol)
+test_predictions(
+  predictions(mod, by = F)
+)
 
 # predictions(, by = T) ----
 
-enable_JAX_backend()
-preds_byT_jax <- predictions(mod, by = T)
-
-disable_JAX_backend()
-preds_byT_raw <- predictions(mod, by = T)
-
-expect_equal(preds_byT_jax$estimate, preds_byT_raw$estimate, tolerance = tol)
-expect_equal(preds_byT_jax$std.error, preds_byT_raw$std.error, tolerance = tol)
+test_predictions(
+  predictions(mod, by = T)
+)
 
 # avg_predictions() ----
 
-enable_JAX_backend()
-avg_preds_jax <- avg_predictions(mod)
-
-disable_JAX_backend()
-avg_preds_raw <- avg_predictions(mod)
-
-expect_equal(avg_preds_jax$estimate, avg_preds_raw$estimate, tolerance = tol)
-expect_equal(avg_preds_jax$std.error, avg_preds_raw$std.error, tolerance = tol)
+test_predictions(
+  avg_predictions(mod)
+)
 
 # predictions(, by = var) ----
 
 ## dummy
 
-enable_JAX_backend()
-preds_by_var_dummy_jax <- predictions(mod, by = "am")
-
-disable_JAX_backend()
-preds_by_var_dummy_raw <- predictions(mod, by = "am")
-
-expect_equal(preds_by_var_dummy_jax$estimate, 
-             preds_by_var_dummy_raw$estimate, tolerance = tol)
-expect_equal(preds_by_var_dummy_jax$std.error, 
-             preds_by_var_dummy_raw$std.error, tolerance = tol)
+test_predictions(
+  predictions(mod, by = "am")
+)
 
 ## character
 
 mod_factor <- lm(bill_len ~ bill_dep + species, penguins)
 
-enable_JAX_backend()
-preds_by_var_factor_jax <- predictions(mod_factor, by = "species")
-
-disable_JAX_backend()
-preds_by_var_factor_raw <- predictions(mod_factor, by = "species")
-
-expect_equal(preds_by_var_factor_jax$estimate, 
-             preds_by_var_factor_raw$estimate, tolerance = tol)
-expect_equal(preds_by_var_factor_jax$std.error, 
-             preds_by_var_factor_raw$std.error, tolerance = tol)
+test_predictions(
+  predictions(mod_factor, by = "species")
+)
 

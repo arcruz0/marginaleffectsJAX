@@ -53,7 +53,7 @@ predictions(mod, by = "am")
 | :--- |   :---:    |
 | `predictions(mod)`  | ✅ | 
 | `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
-| `predictions(mod, by = "var")`  | ✅ |
+| `predictions(mod, by = "var")` <br> `plot_predictions(mod, by = "var")`  | ✅ |
 | `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |
 | `predictions(mod, by = ..., byfun = sum)`  | 🔜 |
 | `comparisons(mod, ...)`  | 🔜 |

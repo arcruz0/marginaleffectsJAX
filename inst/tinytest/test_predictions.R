@@ -27,7 +27,6 @@ preds_byF_raw <- predictions(mod, by = F)
 expect_equal(preds_byF_jax$estimate, preds_byF_raw$estimate, tolerance = tol)
 expect_equal(preds_byF_jax$std.error, preds_byF_raw$std.error, tolerance = tol)
 
-
 # predictions(, by = T) ----
 
 enable_JAX_backend()

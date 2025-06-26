@@ -49,9 +49,9 @@ test_predictions(
 
 ## character
 
-mod_factor <- lm(bill_len ~ bill_dep + species, penguins)
+mod_char <- lm(bill_len ~ bill_dep + species, penguins)
 
 test_predictions(
-  predictions(mod_factor, by = "species")
+  predictions(mod_char, by = "species")
 )
 

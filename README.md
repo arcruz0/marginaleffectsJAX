@@ -9,7 +9,6 @@ install.packages("remotes") # if `remotes` is not installed
 remotes::install_github("arcruz0/marginaleffectsJAX")
 ```
 ## Usage (*very* preliminary)
-
 ``` r
 library(marginaleffects)
 library(marginaleffectsJAX)
@@ -37,9 +36,7 @@ predictions(mod, by = TRUE)
 #> 
 #> Type: response
 
-predictions(mod, by = "am") # still not implemented; gives warning
-#> Warning: `marginaleffectsJAX` only supports T/F in the `by =`
-#> argument of `predictions()`. Reverting to standard computation.
+predictions(mod, by = "am")
 #> 
 #>  am Estimate Std. Error    z Pr(>|z|)     S 2.5 % 97.5 %
 #>   0     17.1      0.667 25.7   <0.001 481.2  15.8   18.5
@@ -56,7 +53,7 @@ predictions(mod, by = "am") # still not implemented; gives warning
 | :--- |   :---:    |
 | `predictions(mod)`  | ✅ | 
 | `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
-| `predictions(mod, by = "var")`  | 🔜 |
+| `predictions(mod, by = "var")`  | ✅ |
 | `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |
 | `predictions(mod, by = ..., byfun = sum)`  | 🔜 |
 | `comparisons(mod, ...)`  | 🔜 |

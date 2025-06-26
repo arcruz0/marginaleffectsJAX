@@ -26,6 +26,8 @@ Imports:
     marginaleffects (>= 0.27.0.8),
     reticulate,
     checkmate
-Suggests: tinytest
+Suggests: 
+    tinytest,
+    ggplot2
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

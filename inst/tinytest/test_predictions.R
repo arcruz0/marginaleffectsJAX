@@ -19,13 +19,13 @@ expect_equal(preds_jax$std.error, preds_raw$std.error, tolerance = tol)
 # predictions(, by = F) ----
 
 enable_JAX_backend()
-preds_byT_jax <- predictions(mod, by = F)
+preds_byF_jax <- predictions(mod, by = F)
 
 disable_JAX_backend()
-preds_byT_raw <- predictions(mod, by = F)
+preds_byF_raw <- predictions(mod, by = F)
 
-expect_equal(preds_byT_jax$estimate, preds_byT_raw$estimate, tolerance = tol)
-expect_equal(preds_byT_jax$std.error, preds_byT_raw$std.error, tolerance = tol)
+expect_equal(preds_byF_jax$estimate, preds_byF_raw$estimate, tolerance = tol)
+expect_equal(preds_byF_jax$std.error, preds_byF_raw$std.error, tolerance = tol)
 
 
 # predictions(, by = T) ----

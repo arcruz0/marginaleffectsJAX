@@ -77,7 +77,7 @@ enable_JAX_backend <- function(verbose = FALSE) {
       }
     )
 
-    mej_env$j_get_predict_by_var_lm <- mej_env$jax$jacfwd(mej_env$get_predict_by_var_lm)
+    mej_env$j_get_predict_by_var_lm <- mej_env$jax$jacrev(mej_env$get_predict_by_var_lm)
   }
 
   # set option and notify user

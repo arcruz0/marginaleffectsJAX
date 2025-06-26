@@ -1,6 +1,6 @@
 # marginaleffectsJAX
 
-A JAX Backend for [`marginaleffects`](https://github.com/vincentarelbundock/marginaleffects/). Under construction!
+A JAX backend for [`marginaleffects`](https://github.com/vincentarelbundock/marginaleffects/). Under construction!
 
 ## Installation
 

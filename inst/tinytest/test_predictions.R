@@ -2,7 +2,7 @@
 # must allow some tolerance
 tol <- 1e-5
 
-test_predictions <- function(expr_preds, tolerance = 1e-5){
+test_predictions <- function(expr_preds, tolerance = tol){
   enable_JAX_backend()
   preds_jax <- eval(expr_preds)
   disable_JAX_backend()

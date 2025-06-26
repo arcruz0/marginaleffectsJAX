@@ -2,7 +2,6 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
   # testing only:
   # list_args <<- c(as.list(environment()), list(...))
   # message("Wrote `list_args` to Global environment")
-  # return(NULL)
   
   # https://stackoverflow.com/a/17244041
   list_args <- c(as.list(environment()), list(...))
@@ -37,8 +36,9 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
   }
   
   # supported predict arguments
-  if (!isTRUE(checkmate::check_logical(list_args$by, null.ok = FALSE))){
-    msg <- "`marginaleffectsJAX` only supports T/F in the `by =` argument of `predictions()`. Reverting to standard computation."
+  if (isFALSE(is.null(list_args$by) | is.logical(list_args$by) |
+        is.character(list_args$by))){
+    msg <- "`marginaleffectsJAX` only supports NULL, a character, or T/F in the `by =` argument of `predictions()`. Reverting to standard computation."
     warning(msg, call. = FALSE)
     return(NULL)
   }
@@ -47,10 +47,16 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
   if (isTRUE(verbose)) message("--Executing JAX function")
   J <- NULL
   
-  if (isTRUE(is.null(list_args$by))){
+  if (isTRUE(is.null(list_args$by) | isFALSE(list_args$by))){
     J <- jacobian_predictions(coefs, X)
   } else if (isTRUE(list_args$by)) {
     J <- jacobian_predictions_byT(coefs, X)
+  } else if (checkmate::check_character(list_args$by)){
+    by_index <- newdata[[list_args$by]] |> as.factor()
+    num_groups <- nlevels(by_index)
+    by_index <- by_index |> as.integer()
+    num_groups <- by_index |> unique() |> length()
+    J <- jacobian_predictions_by_var(coefs, X, by_index, num_groups)
   }
   
   if (isTRUE(verbose)){

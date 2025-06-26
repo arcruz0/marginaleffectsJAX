@@ -20,6 +20,8 @@ Description: Speeds up some Delta-method computations in `marginaleffects`, usin
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 4.1.0)
 Imports:
     marginaleffects (>= 0.27.0.8),
     reticulate,

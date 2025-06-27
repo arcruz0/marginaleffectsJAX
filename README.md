@@ -8,6 +8,15 @@ A JAX backend for [`marginaleffects`](https://github.com/vincentarelbundock/marg
 install.packages("remotes") # if `remotes` is not installed
 remotes::install_github("arcruz0/marginaleffectsJAX")
 ```
+
+## Benchmarks (*very* preliminary)
+
+<img src="./benchmarks/benchmark_predictions_p_median.png" width="70%">
+
+**Setting:** `lm()` models with $N$ observations,  $y \sim \text{N}(0,1)$, and $K$ regressors, half of which are $x_k \sim \text{N}(0,1)$ and half of which are $x_k \sim \text{Bernoulli}(0.5)$. `by = "var"` predictions are for one of the latter. Median times over 10 replications. See [`benchmarks/benchmark_predictions.R`](benchmarks/benchmark_predictions.R) for the code.
+
+**Note:** Loading the `marginaleffectsJAX` can take a few seconds. Calling a function for the first time can take more time than subsequent runs; see [plot for maximum times](./benchmarks/benchmark_predictions_p_max.png). 
+
 ## Usage (*very* preliminary)
 ``` r
 library(marginaleffects)

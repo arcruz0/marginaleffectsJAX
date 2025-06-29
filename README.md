@@ -15,7 +15,7 @@ remotes::install_github("arcruz0/marginaleffectsJAX")
 
 **Setting:** `lm()` models with $N$ observations,  $y \sim \text{N}(0,1)$, and $K$ regressors, half of which are $x_k \sim \text{N}(0,1)$ and half of which are $x_k \sim \text{Bernoulli}(0.5)$. `by = "var"` predictions are for one of the latter. Median times over 10 replications. See [`benchmarks/benchmark_predictions.R`](benchmarks/benchmark_predictions.R) for the code.
 
-**Note:** Loading the `marginaleffectsJAX` can take a few seconds. Calling a function for the first time can take more time than subsequent runs; see [plot for maximum times](./benchmarks/benchmark_predictions_p_max.png). 
+**Note:** Loading `marginaleffectsJAX` takes a few seconds. Calling a function for the first time takes more time than subsequent runs; see [plot for maximum times](./benchmarks/benchmark_predictions_p_max.png). 
 
 ## Usage (*very* preliminary)
 ``` r

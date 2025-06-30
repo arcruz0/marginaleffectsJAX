@@ -5,7 +5,8 @@ tol <- 1e-5
 library(marginaleffects)
 
 test_plot_predictions <- function(expr_plot_preds, tolerance = tol){
-  enable_JAX_backend()
+  enable_JAX_backend(verbose = T)
+  expect_message(eval(expr_plot_preds), "Succesfully executed JAX function")
   plot_preds_jax <- eval(expr_plot_preds)
   disable_JAX_backend()
   plot_preds_no_jax <- eval(expr_plot_preds)

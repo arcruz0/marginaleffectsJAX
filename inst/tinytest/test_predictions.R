@@ -3,7 +3,8 @@
 tol <- 1e-5
 
 test_predictions <- function(expr_preds, tolerance = tol){
-  enable_JAX_backend()
+  enable_JAX_backend(verbose = T)
+  expect_message(eval(expr_preds), "Succesfully executed JAX function")
   preds_jax <- eval(expr_preds)
   disable_JAX_backend()
   preds_no_jax <- eval(expr_preds)

@@ -37,6 +37,9 @@ penguins2 <- penguins[sample(1:nrow(penguins), nrow(penguins)),]
 # Create dummy/integer variable
 penguins2$dummy_female <- ifelse(penguins2$sex == "female", 1L, 0L)
 
+# Create ID integer variable
+penguins2$id <- 1:nrow(penguins2)
+
 # Estimate baseline model for tests
 mod <- lm(bill_len ~ bill_dep + dummy_female, penguins2)
 
@@ -162,6 +165,19 @@ test_plot_predictions(
 )
 
 
+# predictions(, by = data.frame) -----------------------------------------------
+
+# Generate "by" data.frame
+df_by <- data.frame(
+  id = penguins2$id, 
+  by = sample(letters[1:3], size = nrow(penguins2), replace = T)
+)
+# Scramble
+df_by <- df_by[sample(1:nrow(df_by), nrow(df_by)),]
+
+test_predictions(
+  predictions(mod, by = df_by)
+)
 
 # predictions(, newdata = datagrid()) ------------------------------------------
 

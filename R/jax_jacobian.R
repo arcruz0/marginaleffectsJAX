@@ -37,22 +37,40 @@ jax_jacobian <- function(coefs, newdata, model, hypothesis, calling_function, ..
   
   # supported predict arguments
   if (isFALSE(is.null(list_args$by) | is.logical(list_args$by) |
-        is.character(list_args$by))){
-    msg <- "`marginaleffectsJAX` only supports NULL, a character, or T/F in the `by =` argument of `predictions()`. Reverting to standard computation."
+        is.character(list_args$by) | is.data.frame(list_args$by))){
+    msg <- "`marginaleffectsJAX` only supports NULL, a character, T/F, or a data.frame in the `by =` argument of `predictions()`. Reverting to standard computation."
     warning(msg, call. = FALSE)
     return(NULL)
   }
   
   # executing JAX
   if (isTRUE(verbose)) message("--Executing JAX function")
+  
   J <- NULL
+  
+  # unit-level predictions
   
   if (isTRUE(is.null(list_args$by) | isFALSE(list_args$by))){
     J <- jacobian_predictions(coefs, X)
-  } else if (isTRUE(list_args$by)) {
+  } 
+  
+  # average predictions
+  
+  if (isTRUE(list_args$by)) {
     J <- jacobian_predictions_byT(coefs, X)
-  } else if (checkmate::check_character(list_args$by)){
-    by_index <- newdata[[list_args$by]] |> as.factor()
+  }
+  
+  # marginal predictions
+  
+  if (is.null(J)){
+    if (is.data.frame(list_args$by)){
+      # if `by` is a data.frame, merge into `newdata`
+      newdata <- merge(newdata, list_args$by, sort = F, all.x = T)
+      by_index <- newdata[["by"]] |> as.factor()
+    } else if (is.character(list_args$by)){
+      by_index <- newdata[[list_args$by]] |> as.factor()
+    }
+
     num_groups <- nlevels(by_index)
     by_index <- by_index |> as.integer()
     num_groups <- by_index |> unique() |> length()

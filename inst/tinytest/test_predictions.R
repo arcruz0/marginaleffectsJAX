@@ -3,7 +3,7 @@ library(marginaleffects)
 # Define tests
 
 # Set tolerance - autodiff may be more precise than numerical differentiation
-tol <- 1e-5
+tol <- 1e-6
 
 # Test predictions() calls
 test_predictions <- function(expr_preds, tolerance = tol){
@@ -72,6 +72,10 @@ test_predictions(
 
 test_predictions(
   predictions(mod, by = "dummy_female")
+)
+
+test_predictions(
+  avg_predictions(mod, by = "dummy_female")
 )
 
 test_plot_predictions(
@@ -157,3 +161,88 @@ test_plot_predictions(
   plot_predictions(mod_factor_from_chr_as.factor, by = "species_chr")
 )
 
+
+
+# predictions(, newdata = datagrid()) ------------------------------------------
+
+mod_plus <- lm(bill_len ~ bill_dep + flipper_len * sex, penguins2)
+
+## setting values
+
+test_predictions(
+  predictions(mod_plus,
+              datagrid(flipper_len = 200:201, sex = c("male", "female")))
+)
+
+## setting functions
+
+test_predictions(
+  predictions(mod_plus,
+              datagrid(flipper_len = mean, sex = unique))
+)
+
+## setting values + functions
+
+test_predictions(
+  predictions(mod_plus,
+              datagrid(flipper_len = 200:201, sex = unique))
+)
+
+
+
+# predictions(, newdata = datagrid(, grid_type = "counterfactual")) ------------
+
+test_predictions(
+  predictions(mod_plus,
+              datagrid(flipper_len = 200:201, sex = unique, 
+                       grid_type = "counterfactual"))
+)
+
+test_predictions(
+  predictions(mod_plus,
+              variables = list(flipper_len = 200:201, sex = unique))
+)
+
+test_predictions(
+  avg_predictions(
+    mod_plus,
+    variables = list(flipper_len = 200:201, sex = unique),
+    by = "sex"
+  )
+)
+
+
+
+# predictions(, newdata = "mean") ----------------------------------------------
+
+test_predictions(
+  predictions(mod_plus, newdata = "mean")
+)
+
+
+
+# predictions(, newdata = "balanced") ----------------------------------------------
+
+test_predictions(
+  predictions(mod_plus, newdata = "balanced")
+)
+
+test_predictions(
+  avg_predictions(mod_plus, newdata = "balanced", by = "sex")
+)
+
+
+
+# plot_predictions(, condition = var) ------------------------------------------
+
+test_plot_predictions(
+  plot_predictions(mod_plus, condition = "bill_dep")
+)
+
+test_plot_predictions(
+  plot_predictions(mod_plus, condition = c("bill_dep", "flipper_len"))
+)
+
+test_plot_predictions(
+  plot_predictions(mod_plus, condition = c("bill_dep", "flipper_len", "sex"))
+)

@@ -63,8 +63,8 @@ predictions(mod, by = "am")
 | Predictions: unit-level | `predictions(mod)`  | ✅ | 
 | Predictions: aggregate | `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
 | Predictions: marginal | `predictions(mod, by = "var")` <br> `avg_predictions(mod, by = "var")` <br> `plot_predictions(mod, by = "var")`  | ✅ |
-| Predictions: custom grid | `predictions(mod, newdata = data_grid())`  | ✅ |
-| Predictions: counterfactual grid | `predictions(mod, newdata = data_grid(, grid_type = "counterfactual"))`  | ✅ |
+| Predictions: custom grid | `predictions(mod, newdata = data_grid(...))`  | ✅ |
+| Predictions: counterfactual grid | `predictions(mod, newdata = data_grid(..., grid_type = "counterfactual"))`  | ✅ |
 | Predictions: mean-or-mode grid | `predictions(mod, newdata = "mean")`  | ✅ |
 | Predictions: balanced grid | `predictions(mod, newdata = "balanced"))`  | ✅ |
 | Predictions: weighted | `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |

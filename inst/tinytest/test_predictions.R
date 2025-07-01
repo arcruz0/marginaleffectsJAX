@@ -246,3 +246,32 @@ test_plot_predictions(
 test_plot_predictions(
   plot_predictions(mod_plus, condition = c("bill_dep", "flipper_len", "sex"))
 )
+
+test_plot_predictions(
+  plot_predictions(
+    mod_plus, 
+    condition = list("bill_dep", "flipper_len" = 200, "sex"= "female")
+  )
+)
+
+
+
+# Alternative VCOVs ------------------------------------------------------------
+
+test_predictions(
+  predictions(mod_factor_pre, by = "species", vcov = "HC1")
+)
+
+test_predictions(
+  avg_predictions(mod_factor_pre, by = "species", vcov = "HC1")
+)
+
+test_predictions(
+  predictions(mod_factor_pre, by = "species", vcov = ~species)
+)
+
+test_predictions(
+  avg_predictions(mod_factor_pre, by = "species", vcov = ~species)
+)
+
+

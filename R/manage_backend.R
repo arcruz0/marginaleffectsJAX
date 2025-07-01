@@ -41,7 +41,8 @@ enable_JAX_backend <- function(verbose = FALSE) {
     
     # JIT and Jacobian functions - TODO: call from other script(s)
     
-    # predictions
+    # unit-level predictions
+    
     mej_env$get_predict_lm <- mej_env$jax$jit(
       function(coefs, X) {
         return(mej_env$jnp$matmul(X, coefs))
@@ -50,7 +51,8 @@ enable_JAX_backend <- function(verbose = FALSE) {
     
     mej_env$j_get_predict_lm <- mej_env$jax$jacfwd(mej_env$get_predict_lm)
     
-    # predictions(, by = T)
+    # average predictions
+    
     mej_env$get_predict_byT_lm <- mej_env$jax$jit(
       function(coefs, X) {
         return(mej_env$jnp$mean(mej_env$jnp$matmul(X, coefs)))
@@ -59,7 +61,8 @@ enable_JAX_backend <- function(verbose = FALSE) {
     
     mej_env$j_get_predict_byT_lm <- mej_env$jax$jacrev(mej_env$get_predict_byT_lm)
     
-    # average predictions
+    # marginal predictions
+    
     mej_env$jit_partial <- mej_env$functools$partial(mej_env$jax$jit, static_argnums = 3L)
 
     mej_env$get_predict_by_var_lm <- mej_env$jit_partial(

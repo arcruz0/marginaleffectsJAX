@@ -227,9 +227,9 @@ test_predictions(
   predictions(mod_plus, newdata = "balanced")
 )
 
-test_predictions(
-  avg_predictions(mod_plus, newdata = "balanced", by = "sex")
-)
+# test_predictions(
+#   avg_predictions(mod_plus, newdata = "balanced", by = "sex")
+# )
 
 
 

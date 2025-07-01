@@ -2,8 +2,6 @@
 # must allow some tolerance
 tol <- 1e-5
 
-library(marginaleffects)
-
 test_plot_predictions <- function(expr_plot_preds, tolerance = tol){
   enable_JAX_backend(verbose = T)
   expect_message(eval(expr_plot_preds), "Succesfully executed JAX function")
@@ -16,18 +14,67 @@ test_plot_predictions <- function(expr_plot_preds, tolerance = tol){
                tolerance = tolerance)
 }
 
+library(marginaleffects)
+
+# Scramble datasets to make sure order doesn't make a difference
+mtcars2 <- mtcars[sample(1:nrow(mtcars), nrow(mtcars)),]
+penguins2 <- penguins[sample(1:nrow(penguins), nrow(penguins)),]
+
+mod <- lm(mpg ~ hp + am, mtcars2)
+
 # plot_predictions(, by = var) ----
 
 ## dummy
-mod <- lm(mpg ~ hp + am, mtcars)
 
 test_plot_predictions(
   plot_predictions(mod, by = "am")
 )
 
 ## character
-mod_char <- lm(bill_len ~ bill_dep + species, penguins)
+
+mod_chr <- lm(bill_len ~ bill_dep + species_chr, 
+              penguins2 |> transform(species_chr = as.character(species)))
 
 test_plot_predictions(
-  plot_predictions(mod_char, by = "species")
+  plot_predictions(mod_chr, by = "species_chr")
+)
+
+## factor: pre-existing factor variable
+
+mod_factor_pre <- lm(bill_len ~ bill_dep + species, penguins2)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_pre, by = "species")
+)
+
+## factor: character variable passed as factor()
+
+mod_factor_from_chr <- lm(
+  bill_len ~ bill_dep + factor(species_chr), 
+  penguins2 |> transform(species_chr = as.character(species))
+)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_from_chr, by = "species_chr")
+)
+
+# factor: integer variable passed as factor()
+mod_factor_from_int <-  lm(bill_len ~ bill_dep + factor(year), penguins2)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_from_int, by = "year")
+)
+
+# factor: numeric variable passed as factor()
+mod_factor_from_num <- lm(mpg ~ hp + factor(am), mtcars2)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_from_num, by = "am")
+)
+
+# factor: variable passed as as.factor()
+mod_factor_from_num_as.factor <- lm(mpg ~ hp + as.factor(am), mtcars2)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_from_num_as.factor, by = "am")
 )

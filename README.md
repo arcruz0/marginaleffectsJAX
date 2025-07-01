@@ -58,14 +58,15 @@ predictions(mod, by = "am")
 
 (Only models of class `lm` are supported).
 
-| Call  | Supported? |
-| :--- |   :---:    |
-| `predictions(mod)`  | ✅ | 
-| `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
-| `predictions(mod, by = "var")` <br> `plot_predictions(mod, by = "var")`  | ✅ |
-| `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |
-| `predictions(mod, by = ..., byfun = sum)`  | 🔜 |
-| `comparisons(mod, ...)`  | 🔜 |
-
-
-
+| Functionality | Example call(s)  | Supported? |
+| :--- | :--- |   :---:    |
+| Predictions: unit-level | `predictions(mod)`  | ✅ | 
+| Predictions: aggregate | `predictions(mod, by = TRUE)` <br> `avg_predictions(mod)`  | ✅  | 
+| Predictions: marginal | `predictions(mod, by = "var")` <br> `avg_predictions(mod, by = "var")` <br> `plot_predictions(mod, by = "var")`  | ✅ |
+| Predictions: custom grid | `predictions(mod, newdata = data_grid())`  | ✅ |
+| Predictions: counterfactual grid | `predictions(mod, newdata = data_grid(, grid_type = "counterfactual"))`  | ✅ |
+| Predictions: mean-or-mode grid | `predictions(mod, newdata = "mean")`  | ✅ |
+| Predictions: balanced grid | `predictions(mod, newdata = "balanced"))`  | ✅ |
+| Predictions: weighted | `predictions(mod, by = "var", wt = "wvar")`  | 🔜 |
+| Predictions: summed | `predictions(mod, by = ..., byfun = sum)`  | 🔜 |
+| Comparisons | `comparisons(mod, ...)`  | 🔜 |

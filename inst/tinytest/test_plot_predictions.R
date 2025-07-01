@@ -16,23 +16,24 @@ test_plot_predictions <- function(expr_plot_preds, tolerance = tol){
 
 library(marginaleffects)
 
-# Scramble datasets to make sure order doesn't make a difference
-mtcars2 <- mtcars[sample(1:nrow(mtcars), nrow(mtcars)),]
+# Scramble dataset to make sure order doesn't make a difference
+set.seed(1)
 penguins2 <- penguins[sample(1:nrow(penguins), nrow(penguins)),]
+penguins2$dummy_female <- ifelse(penguins2$sex == "female", 1L, 0L)
 
-mod <- lm(mpg ~ hp + am, mtcars2)
+mod <- lm(bill_len ~ bill_dep + dummy_female, penguins2)
 
 # plot_predictions(, by = var) ----
 
 ## dummy
 
 test_plot_predictions(
-  plot_predictions(mod, by = "am")
+  plot_predictions(mod, by = "dummy_female")
 )
 
 ## character
 
-mod_chr <- lm(bill_len ~ bill_dep + species_chr, 
+mod_chr <- lm(bill_len ~ bill_dep + species_chr,
               penguins2 |> transform(species_chr = as.character(species)))
 
 test_plot_predictions(
@@ -66,15 +67,15 @@ test_plot_predictions(
 )
 
 # factor: numeric variable passed as factor()
-mod_factor_from_num <- lm(mpg ~ hp + factor(am), mtcars2)
+mod_factor_from_num <- lm(bill_len ~ bill_dep + factor(bill_dep), penguins2)
 
 test_plot_predictions(
-  plot_predictions(mod_factor_from_num, by = "am")
+  plot_predictions(mod_factor_from_num, by = "bill_dep")
 )
 
 # factor: variable passed as as.factor()
-mod_factor_from_num_as.factor <- lm(mpg ~ hp + as.factor(am), mtcars2)
+mod_factor_from_num_as.factor <- lm(bill_len ~ bill_dep + as.factor(bill_dep), penguins2)
 
 test_plot_predictions(
-  plot_predictions(mod_factor_from_num_as.factor, by = "am")
+  plot_predictions(mod_factor_from_num_as.factor, by = "bill_dep")
 )

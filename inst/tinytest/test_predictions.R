@@ -1,8 +1,4 @@
-# occasionally autodiff is more precise than numerical differentiation.
-# must allow some tolerance
-tol <- 1e-5
-
-test_predictions <- function(expr_preds, tolerance = tol){
+test_predictions <- function(expr_preds, tolerance = 1e-5){
   enable_JAX_backend(verbose = T)
   expect_message(eval(expr_preds), "Succesfully executed JAX function")
   preds_jax <- eval(expr_preds)
@@ -15,11 +11,12 @@ test_predictions <- function(expr_preds, tolerance = tol){
 
 library(marginaleffects)
 
-# Scramble datasets to make sure order doesn't make a difference
-mtcars2 <- mtcars[sample(1:nrow(mtcars), nrow(mtcars)),]
+# Scramble dataset to make sure order doesn't make a difference
+set.seed(1)
 penguins2 <- penguins[sample(1:nrow(penguins), nrow(penguins)),]
+penguins2$dummy_female <- ifelse(penguins2$sex == "female", 1L, 0L)
 
-mod <- lm(mpg ~ hp + am, mtcars2)
+mod <- lm(bill_len ~ bill_dep + dummy_female, penguins2)
 
 # predictions() ----
 
@@ -50,12 +47,12 @@ test_predictions(
 ## dummy
 
 test_predictions(
-  predictions(mod, by = "am")
+  predictions(mod, by = "dummy_female")
 )
 
 ## character
 
-mod_chr <- lm(bill_len ~ bill_dep + species_chr, 
+mod_chr <- lm(bill_len ~ bill_dep + species_chr,
                penguins2 |> transform(species_chr = as.character(species)))
 
 test_predictions(
@@ -89,15 +86,19 @@ test_predictions(
 )
 
 # factor: numeric variable passed as factor()
-mod_factor_from_num <- lm(mpg ~ hp + factor(am), mtcars2)
+mod_factor_from_num <- lm(bill_len ~ bill_dep + factor(bill_dep), penguins2)
 
 test_predictions(
-  predictions(mod_factor_from_num, by = "am")
+  predictions(mod_factor_from_num, by = "bill_dep")
 )
 
 # factor: variable passed as as.factor()
-mod_factor_from_num_as.factor <- lm(mpg ~ hp + as.factor(am), mtcars2)
+mod_factor_from_chr_as.factor <- lm(
+  bill_len ~ bill_dep + as.factor(species_chr), 
+  penguins2 |> transform(species_chr = as.character(species))
+)
 
 test_predictions(
-  predictions(mod_factor_from_num_as.factor, by = "am")
+  predictions(mod_factor_from_chr_as.factor, by = "species_chr")
 )
+

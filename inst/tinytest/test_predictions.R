@@ -110,6 +110,18 @@ test_plot_predictions(
   plot_predictions(mod_factor_pre, by = "species")
 )
 
+## factor: pre-existing factor variable (only var in model)
+
+mod_factor_pre_only <- lm(bill_len ~ species, penguins2)
+
+test_predictions(
+  predictions(mod_factor_pre_only, by = "species")
+)
+
+test_plot_predictions(
+  plot_predictions(mod_factor_pre_only, by = "species")
+)
+
 ## factor: character variable passed as factor()
 
 mod_factor_from_chr <- lm(
@@ -243,9 +255,9 @@ test_predictions(
   predictions(mod_plus, newdata = "balanced")
 )
 
-# test_predictions(
-#   avg_predictions(mod_plus, newdata = "balanced", by = "sex")
-# )
+test_predictions(
+  avg_predictions(mod_plus, newdata = "balanced", by = "sex")
+)
 
 
 

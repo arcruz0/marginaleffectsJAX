@@ -1,3 +1,8 @@
+> [!NOTE]
+> `marginaleffects` now includes experimental support for everything in this package, and more! 🚀
+> 
+> [Check out the documentation.](https://marginaleffects.com/man/r/autodiff.html)
+
 # marginaleffectsJAX
 
 A JAX backend for [`marginaleffects`](https://github.com/vincentarelbundock/marginaleffects/). Under construction!
